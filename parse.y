@@ -1,7 +1,7 @@
 class Parser
   options no_result_var
   prechigh
-    left '*' '/'
+    left '*' '/' '%'
     left '+' '-'
     left '>' '<'
     left '=='
