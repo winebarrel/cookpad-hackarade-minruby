@@ -22,12 +22,19 @@ class Parser
          | while_stmt { val.fetch(0) }
          | expr { val.fetch(0) }
 
-    func_def : "def" IDENTIFIER "(" arg_vars ")" stmts "end"
+    func_def : "def" IDENTIFIER "(" ")" stmts "end"
                {
-                 ["func_def", val.fetch(1), val.fetch(3), val.fetch(3)]
+                 ["func_def", val.fetch(1), [], val.fetch(4)]
+               }
+             | "def" IDENTIFIER "(" arg_vars ")" stmts "end"
+               {
+                 ["func_def", val.fetch(1), val.fetch(3), val.fetch(5)]
                }
 
-    arg_vars :
+    arg_vars : IDENTIFIER
+               {
+                 [val.fetch(0)]
+               }
              | arg_vars "," IDENTIFIER
                {
                  val.fetch(0) + [val.fetch(2)]
@@ -159,7 +166,7 @@ def scan
   until @ss.eos?
     if (tok = @ss.scan /\s+/)
       # nothing to do
-    elsif (tok = @ss.scan /(if|while|end|else)/)
+    elsif (tok = @ss.scan /(if|while|end|else|def)/)
       yield [tok, tok]
     elsif (tok = @ss.scan /,|\(|\)|\{|\}|=>|\+|\-|\*|\/|%|>|<|==|\]\s*=|\[|\]|=/)
       yield [tok, tok]

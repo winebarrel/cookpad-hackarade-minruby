@@ -39,9 +39,13 @@ def evaluate(exp, env)
 #
 
   when "stmts"
-    exp[1..-1].map do |stmt|
-      evaluate(stmt, env)
+    retval = nil
+
+    exp[1..-1].each do |stmt|
+      retval = evaluate(stmt, env)
     end
+
+    retval
 
   # The second argument of this method, `env`, is an "environement" that
   # keeps track of the values stored to variables.
@@ -126,6 +130,7 @@ def evaluate(exp, env)
       arg_vars.zip(arg_vals).each do |var, val|
         local_env[var] = evaluate(val, env)
       end
+
 
       retval = nil
 
