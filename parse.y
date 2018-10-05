@@ -107,11 +107,12 @@ class Parser
 
     ary_new : '[' ']'
               {
-                ["ary_new", []]
+                ["ary_new"]
               }
             | '[' exprs ']'
               {
-                ["ary_new", val.fetch(1)]
+                p val[1]
+                ["ary_new", *val.fetch(1)]
               }
 
     ary_ref : expr '[' expr ']'
@@ -119,7 +120,7 @@ class Parser
                 ["ary_ref", val.fetch(0), val.fetch(2)]
               }
 
-    ary_assign : IDENTIFIER '[' expr ']=' expr
+    ary_assign : expr '[' expr ']=' expr
                  {
                    ["ary_assign", val.fetch(0), val.fetch(2), val.fetch(5)]
                  }
@@ -139,7 +140,11 @@ class Parser
             }
           | exprs ',' expr
             {
-              val.fetch(2) + [val.fetch(0)]
+              if val.fetch(0).first.is_a?(Array)
+                val.fetch(0) + [val.fetch(2)]
+              else
+                [val.fetch(0), val.fetch(2)]
+              end
             }
 
     pairs :
