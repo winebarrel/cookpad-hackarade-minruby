@@ -26,7 +26,8 @@ def scan
     elsif (tok = @ss.scan /(true|false)/)
       yield [:BOOL, tok == 'true']
     elsif (tok = @ss.scan /,|\(|\)|\{|\}|=>|\+|\-|\*|\/|%|>|<|==|\]\s*=|\[|\]|=/)
-      yield [tok, tok.gsub(/\s+/, '')]
+      tok.gsub!(/\s+/, '')
+      yield [tok, tok]
     elsif (tok = @ss.scan /"(?:[^"]|"")*"/)
       yield [:STRING, tok.slice(1...-1)]
     elsif (tok = @ss.scan /\d+/)
@@ -659,7 +660,7 @@ module_eval(<<'.,.,', 'parse.y', 119)
 
 module_eval(<<'.,.,', 'parse.y', 124)
   def _reduce_41(val, _values)
-                       ["ary_assign", val.fetch(0), val.fetch(2), val.fetch(5)]
+                       ["ary_assign", val.fetch(0), val.fetch(2), val.fetch(4)]
                  
   end
 .,.,
