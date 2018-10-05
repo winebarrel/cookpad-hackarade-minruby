@@ -35,6 +35,10 @@ class Parser
               {
                 ["if", val.fetch(1), val.fetch(2)]
               }
+            | "if" expr stmts "else" stmts "end"
+              {
+                ["if", val.fetch(1), val.fetch(2)]
+              }
 
     while_stmt : "while" expr stmts "end"
                  {
