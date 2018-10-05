@@ -80,6 +80,10 @@ class Parser
               {
                 ["lit", val.fetch(0)]
               }
+            | BOOL
+              {
+                ["lit", val.fetch(0)]
+              }
 
     var_ref : IDENTIFIER
               {
@@ -168,13 +172,15 @@ def scan
       # nothing to do
     elsif (tok = @ss.scan /(if|while|end|else|def)/)
       yield [tok, tok]
+    elsif (tok = @ss.scan /(true|false)/)
+      yield [:BOOL, tok == 'true']
     elsif (tok = @ss.scan /,|\(|\)|\{|\}|=>|\+|\-|\*|\/|%|>|<|==|\]\s*=|\[|\]|=/)
       yield [tok, tok]
     elsif (tok = @ss.scan /"(?:[^"]|"")*"/)
       yield [:STRING, tok.slice(1...-1)]
     elsif (tok = @ss.scan /\d+/)
       yield [:NUMBER, tok.to_i]
-    elsif (tok = @ss.scan /\w+/)
+    elsif (tok = @ss.scan /\w+\??/)
       yield [:IDENTIFIER, tok]
     elsif @ss.scan /#.*$/
       # nothing to do
