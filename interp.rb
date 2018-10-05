@@ -1,4 +1,4 @@
-require "minruby"
+#require "minruby"
 require "./parse.tab.rb"
 
 # An implementation of the evaluator
