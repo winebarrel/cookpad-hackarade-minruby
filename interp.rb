@@ -90,6 +90,18 @@ def evaluate(exp, env)
       # ... Problem 4
       when "Integer"
         Integer(evaluate(exp[2], env))
+      when "fizzbuzz"
+        i = evaluate(exp[2], env)
+
+        if i % 15 == 0
+          "FizzBuzz"
+        elsif i % 3 == 0
+          "Fizz"
+        elsif i % 5 == 0
+          "Buzz"
+        else
+          i
+        end
       else
         raise("unknown builtin function")
       end
