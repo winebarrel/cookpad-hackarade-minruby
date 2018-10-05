@@ -49,6 +49,7 @@ class Parser
          | ary_ref { val.fetch(0) }
          | ary_assign { val.fetch(0) }
          | hash_new { val.fetch(0) }
+         | '(' expr ')'  { val.fetch(1) }
          | expr "+" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
          | expr "-" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
          | expr "*" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
