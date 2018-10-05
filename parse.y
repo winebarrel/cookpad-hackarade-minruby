@@ -193,7 +193,7 @@ def scan
     end
   end
 
-  yield p([false, ''])
+  yield [false, '']
 end
 
 def parse

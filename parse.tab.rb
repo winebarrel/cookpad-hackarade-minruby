@@ -22,18 +22,18 @@ def scan
     if (tok = @ss.scan /\s+/)
       # nothing to do
     elsif (tok = @ss.scan /(if|while|end|else|def)/)
-      yield p([tok, tok])
+      yield [tok, tok]
     elsif (tok = @ss.scan /(true|false)/)
-      yield p([:BOOL, tok == 'true'])
+      yield [:BOOL, tok == 'true']
     elsif (tok = @ss.scan /,|\(|\)|\{|\}|=>|\+|\-|\*|\/|%|>|<|==|\]\s*=|\[|\]|=/)
       tok.gsub!(/\s+/, '')
-      yield p([tok, tok])
+      yield [tok, tok]
     elsif (tok = @ss.scan /"(?:[^"]|"")*"/)
-      yield p([:STRING, tok.slice(1...-1)])
+      yield [:STRING, tok.slice(1...-1)]
     elsif (tok = @ss.scan /\d+/)
-      yield p([:NUMBER, tok.to_i])
+      yield [:NUMBER, tok.to_i]
     elsif (tok = @ss.scan /\w+\??/)
-      yield p([:IDENTIFIER, tok])
+      yield [:IDENTIFIER, tok]
     elsif @ss.scan /#.*$/
       # nothing to do
     end
