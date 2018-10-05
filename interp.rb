@@ -1,4 +1,5 @@
 require "minruby"
+require "./parse.tab.rb"
 
 # An implementation of the evaluator
 def evaluate(exp, env)
@@ -175,4 +176,11 @@ env = {}
 
 # `minruby_load()` == `File.read(ARGV.shift)`
 # `minruby_parse(str)` parses a program text given, and returns its AST
-evaluate(minruby_parse(minruby_load()), env)
+
+prog = File.read(ARGV.shift)
+
+p Parser.parse(prog)
+
+#puts prog
+p minruby_parse(prog)
+#evaluate(minruby_parse(arg), env)
