@@ -1,7 +1,8 @@
 class Parser
   options no_result_var
   prechigh
-    left '*' '/' '+' '-'
+    left '*' '/'
+    left '+' '-'
     right '='
   preclow
   rule
@@ -48,19 +49,14 @@ class Parser
          | ary_ref { val.fetch(0) }
          | ary_assign { val.fetch(0) }
          | hash_new { val.fetch(0) }
-         | expr op expr
-           {
-             [val.fetch(1), val.fetch(0), val.fetch(2)]
-           }
-
-    op : "+" { val.fetch(0) }
-       | "-" { val.fetch(0) }
-       | "*" { val.fetch(0) }
-       | "/" { val.fetch(0) }
-       | "%" { val.fetch(0) }
-       | ">" { val.fetch(0) }
-       | "<" { val.fetch(0) }
-       | "==" { val.fetch(0) }
+         | expr "+" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
+         | expr "-" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
+         | expr "*" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
+         | expr "/" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
+         |  expr "%" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
+         | expr ">" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
+         | expr "<" expr { [val.fetch(1), val.fetch(0), val.fetch(2)] }
+         | expr "=="expr  { [val.fetch(1), val.fetch(0), val.fetch(2)] }
 
     literal : NUMBER
               {

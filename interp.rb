@@ -179,4 +179,5 @@ env = {}
 
 prog = File.read(ARGV.shift)
 parsed = Parser.parse(prog)
+p parsed
 evaluate(parsed, env)
