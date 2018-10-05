@@ -11,7 +11,7 @@ class Parser
             }
           | stmts stmt
             {
-              ["stmts", val.fetch(0).fetch(1) + [val.fetch(1)]]
+              ["stmts", val.fetch(0).fetch(1), val.fetch(1)]
             }
 
     stmt : func_def { val.fetch(0) }
@@ -121,7 +121,7 @@ class Parser
 
     exprs : expr
             {
-              [val.fetch(0)]
+              val.fetch(0)
             }
           | exprs ',' expr
             {

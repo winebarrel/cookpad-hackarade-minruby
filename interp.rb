@@ -178,9 +178,5 @@ env = {}
 # `minruby_parse(str)` parses a program text given, and returns its AST
 
 prog = File.read(ARGV.shift)
-
-p Parser.parse(prog)
-
-#puts prog
-p minruby_parse(prog)
-#evaluate(minruby_parse(arg), env)
+parsed = Parser.parse(prog)
+evaluate(parsed, env)
