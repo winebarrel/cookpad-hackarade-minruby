@@ -112,36 +112,31 @@ def evaluate(exp, env)
 ## Problem 5: Function definition
 #
 
-      # (You may want to implement "func_def" first.)
-      #
-      # Here, we could find a user-defined function definition.
-      # The variable `func` should be a value that was stored at "func_def":
-      # parameter list and AST of function body.
-      #
-      # Function calls evaluates the AST of function body within a new scope.
-      # You know, you cannot access a varible out of function.
-      # Therefore, you need to create a new environment, and evaluate the
-      # function body under the environment.
-      #
-      # Note, you can access formal parameters (*1) in function body.
-      # So, the new environment must be initialized with each parameter.
-      #
-      # (*1) formal parameter: a variable as found in the function definition.
-      # For example, `a`, `b`, and `c` are the formal parameters of
-      # `def foo(a, b, c)`.
-      raise(NotImplementedError) # Problem 5
+      func = $function_definitions[exp[1]]
+      arg_vars = func[0]
+      arg_vals = exp[2..-1]
+
+      if arg_vars.length != arg_vals.length
+        raise("wrong number of arguments (given #{arg_vals.length}, expected #{arg_vars.length})")
+      end
+
+      local_env = env.dup
+
+      arg_vars.zip(arg_vals).each do |var, val|
+        local_env[var] = evaluate(val, env)
+      end
+
+      retval = nil
+
+      func[1..-1].each do |e|
+        retval = evaluate(e, local_env)
+      end
+
+      retval
     end
 
   when "func_def"
-    # Function definition.
-    #
-    # Add a new function definition to function definition list.
-    # The AST of "func_def" contains function name, parameter list, and the
-    # child AST of function body.
-    # All you need is store them into $function_definitions.
-    #
-    # Advice: $function_definitions[???] = ???
-    raise(NotImplementedError) # Problem 5
+    $function_definitions[exp[1]] = exp[2..-1]
 
 
 #
