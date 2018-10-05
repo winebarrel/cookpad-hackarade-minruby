@@ -3,6 +3,8 @@ class Parser
   prechigh
     left '*' '/'
     left '+' '-'
+    left '>' '<'
+    left '=='
     right '='
   preclow
   rule
@@ -37,7 +39,7 @@ class Parser
               }
             | "if" expr stmts "else" stmts "end"
               {
-                ["if", val.fetch(1), val.fetch(2)]
+                ["if", val.fetch(1), val.fetch(2), val.fetch(4)]
               }
 
     while_stmt : "while" expr stmts "end"
