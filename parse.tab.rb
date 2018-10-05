@@ -342,7 +342,7 @@ module_eval(<<'.,.,', 'parse.y', 9)
 
 module_eval(<<'.,.,', 'parse.y', 13)
   def _reduce_2(val, _values)
-                  ["stmts", val.fetch(0).fetch(1), val.fetch(1)]
+                  ["stmts", *val.fetch(0)[1..-1], val.fetch(1)]
             
   end
 .,.,
