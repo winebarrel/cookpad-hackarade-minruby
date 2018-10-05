@@ -175,7 +175,7 @@ def scan
     elsif (tok = @ss.scan /(true|false)/)
       yield [:BOOL, tok == 'true']
     elsif (tok = @ss.scan /,|\(|\)|\{|\}|=>|\+|\-|\*|\/|%|>|<|==|\]\s*=|\[|\]|=/)
-      yield [tok, tok]
+      yield [tok, tok.gsub(/\s+/, '')]
     elsif (tok = @ss.scan /"(?:[^"]|"")*"/)
       yield [:STRING, tok.slice(1...-1)]
     elsif (tok = @ss.scan /\d+/)
