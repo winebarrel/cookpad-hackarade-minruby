@@ -127,11 +127,11 @@ class Parser
 
     hash_new : '{' '}'
                {
-                 ["hash_new", []]
+                 ["hash_new"]
                }
              | '{' pairs '}'
                {
-                 ["hash_new", val.fetch(1)]
+                 ["hash_new", *val.fetch(1)]
                }
 
     exprs : expr
@@ -147,7 +147,7 @@ class Parser
               end
             }
 
-    pairs :
+    pairs : pair
             {
               val.fetch(0)
             }
@@ -193,7 +193,7 @@ def scan
     end
   end
 
-  yield [false, '']
+  yield p([false, ''])
 end
 
 def parse
