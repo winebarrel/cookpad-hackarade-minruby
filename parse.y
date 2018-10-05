@@ -153,6 +153,8 @@ def scan
   until @ss.eos?
     if (tok = @ss.scan /\s+/)
       # nothing to do
+    elsif (tok = @ss.scan /(if|while|end|else)/)
+      yield [tok, tok]
     elsif (tok = @ss.scan /,|\(|\)|\{|\}|=>|\+|\-|\*|\/|%|>|<|==|\]\s*=|\[|\]|=/)
       yield [tok, tok]
     elsif (tok = @ss.scan /"(?:[^"]|"")*"/)
